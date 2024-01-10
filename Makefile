@@ -8,8 +8,10 @@ native: haxe
 	-I out/ \
 	-I ${HL}/src \
 	-funwind-tables -fPIC -Wno-tentative-definition-incomplete-type \
+	-fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes \
 	-std=c11 \
 	-DHL_MOBILE=1 \
+	-DHL_NO_THREADS \
 	out/main.c \
 	${HL}/src/code.c \
 	${HL}/src/debugger.c \
@@ -36,6 +38,7 @@ native: haxe
 	-lpthread \
 	-lpcre \
 	-lm \
+	-O3
 	
 
 

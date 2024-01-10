@@ -9,7 +9,7 @@ class Big {
         }
     }
     var arr = [];
-    var arr2 = new haxe.ds.Vector(1000000);
+    var arr2 = new haxe.ds.Vector(10000001);
 }
 
 class Obj {
@@ -71,28 +71,43 @@ class Main {
     }
 
     function analyze(items:Array< {a: A, b: B, buffed: Float, oldCd: Float}>) {
+        trace("analyze");
         for(item in  items) {
             trace(item.buffed);
         }
     }
 
     var current:Big;
-    function process() {
+
+    var noiseArr = [];
+
+    function noise() {
+        trace("noise");
         for(i in 0...100) {
             var arr:Array<Obj> = [];
             var obj = new Obj();
             obj.process(arr);
+            noiseArr[Std.random(1000)] = obj;
         }
+    }
 
+    function process() {
+        noise();
         var states = saveStates();
         var all = [];
 
-        for(i in 0...1) {
-            var obj = new Big(10, 100);
+
+        trace("bigalloc");
+        for(i in 0...5) {
+            var obj = new Big(10, 10);
             all.push(obj);
             current = obj;
+            all[Std.random(10)] = null;
         }
+
         all = [];
+        noise();
+        noise();
 
         analyze(states);
     }
